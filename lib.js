@@ -62,8 +62,8 @@ function table2tree(table) {
     });
 
     if (tree === []) return {};
-    else { alert(JSON.stringify(tree)); if (tree[0].parent === null) return tree[0]; }
-    else return { "name": tree[0].parent, "parent": null, "children": tree }; // add "flare"
+    else { alert(JSON.stringify(tree)); if (tree[0].parent === null) return tree[0]; 
+    else return { "name": tree[0].parent, "parent": null, "children": tree }; // add "flare" }
 }
 
 // input: [["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
