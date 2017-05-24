@@ -113,15 +113,16 @@ function dot2table(dot) {
 
 // input: [["flare", null, null], ["analytics", "flare", null], ["AgglomerativeCluster", "cluster", 3938]...
 // output: [["flare", ""], ["flare.analytics", ""], ["flare.analytics.cluster", ""],["flare.analytics.cluster.AgglomerativeCluster", "3938"]...
+// eg: https://www.funfun.io/edit/5925013604ce702ccfb22b0b
 function table2dot(table) {
     var tree = table2tree(table);
     var dot = tree2dot(tree);
     return dot
 }
 
-// input: [["Date", "Open"], ["2010-10-01", "10789.72"]], ...]
+// input: [["Date", "Open"], ["2010-10-01", "10789.72"], ...]
 // output: a csv that can be used in d3
-// eg: for https://www.funfun.io/edit/5924fca604ce702ccfb22b06
+// eg: https://www.funfun.io/edit/5924fca604ce702ccfb22b06
 function array2csv(aa, opt) {
     var headers;
     var start;
@@ -141,5 +142,31 @@ function array2csv(aa, opt) {
             row[headers[j]] = aa[i][j];
         r.push(row)
     }
+    return r
+}
+
+// input:
+// [ 
+//   ["source", "target", "type"],
+//   ["Microsoft", "Amazon", "licensing"],
+//   ["Microsoft", "HTC", "licensing"],
+//   ... ...
+// ]
+// output:
+// [ 
+//   {source: "Microsoft", target: "Amazon", type: "licensing"},
+//   {source: "Microsoft", target: "HTC", type: "licensing"},
+//   ... ...
+// ]
+// {currently}: we assume the first element of input is headers
+function arrayOfArray2ArrayOfObject (aa) {
+    var r = [];
+    for (var i = 1; i < aa.length; i++) {
+      var l = {};
+      for (var j = 0; j < aa[0].length; j++) {
+          l[aa[0][j]] = aa[i][j]
+      }
+      r.push(l)
+    };
     return r
 }
