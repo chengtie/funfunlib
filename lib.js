@@ -117,3 +117,28 @@ function table2dot(table) {
     var dot = tree2dot(tree);
     return dot
 }
+
+// input: [["Date", "Open"], ["2010-10-01", "10789.72"]], ...]
+// output: a csv that can be used in d3
+// eg: for https://www.funfun.io/edit/5924fca604ce702ccfb22b06
+function array2csv(aa, opt) {
+    var headers;
+    var start;
+    if (opt.hasHeaders) {
+        headers = [];
+        for (var i=0; i < aa[0].length; i++)
+            headers.push(aa[0][i])
+        start = 1;
+    } else {
+        headers = opt.headers;  
+        start = 0;
+    }
+    var r = [];
+    for (var i=start; i < aa.length; i++) {
+        var row = {};
+        for (var j=0; j < aa[i].length; j++)
+            row[headers[j]] = aa[i][j];
+        r.push(row)
+    }
+    return r
+}
