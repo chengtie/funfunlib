@@ -62,7 +62,7 @@ function table2tree(table) {
     });
 
     if (tree === []) return {};
-    else if (tree[0].parent === null) return tree[0];
+    else { alert(JSON.stringify(tree)); if (tree[0].parent === null) return tree[0]; }
     else return { "name": tree[0].parent, "parent": null, "children": tree }; // add "flare"
 }
 
