@@ -6,7 +6,7 @@ I. This library provides developers on the funfun platform with common functions
 
 II. Use the following link to load lib.js:
 
-<pre><script src="https://cdn.rawgit.com/chengtie/funfunlib/master/lib.js"></script></pre>
+<pre><script src="https://rawgit.com/chengtie/funfunlib/master/lib.js"></script></pre>
 
 
 III. Example:
