@@ -1,3 +1,60 @@
+// input:
+// [ 
+//   ["source", "target", "type"],
+//   ["Microsoft", "Amazon", "licensing"],
+//   ["Microsoft", "HTC", "licensing"],
+//   ... ...
+// ]
+// output:
+// [ 
+//   {source: "Microsoft", target: "Amazon", type: "licensing"},
+//   {source: "Microsoft", target: "HTC", type: "licensing"},
+//   ... ...
+// ]
+// eg: https://www.funfun.io/edit/5925aa6704ce702ccfb22b3d
+// {currently}: we assume the first element of input is headers
+function arrayOfArray2ArrayOfObject (aa) {
+    var r = [];
+    for (var i = 1; i < aa.length; i++) {
+      var l = {};
+      for (var j = 0; j < aa[0].length; j++) {
+          l[aa[0][j]] = aa[i][j]
+      }
+      r.push(l)
+    };
+    return r
+}
+
+// input: 
+// [
+//   ["Date", "Open"], 
+//   ["2010-10-01", "10789.72"], 
+//   ... ...
+// ]
+// output: a csv that can be used in d3
+// eg: https://www.funfun.io/edit/5924fca604ce702ccfb22b06
+function array2csv(aa, opt) {
+    var headers;
+    var start;
+    if (opt.hasHeaders) {
+        headers = [];
+        for (var i=0; i < aa[0].length; i++)
+            headers.push(aa[0][i])
+        start = 1;
+    } else {
+        headers = opt.headers;  
+        start = 0;
+    }
+    var r = [];
+    for (var i=start; i < aa.length; i++) {
+        var row = {};
+        for (var j=0; j < aa[i].length; j++)
+            row[headers[j]] = aa[i][j];
+        r.push(row)
+    }
+    return r
+}
+
 // input: {"name": "flare", "children": [{"name": "analytics", "children": [{"name": "cluster", "children": [{"name": "AgglomerativeCluster", "size": 3938}]}]}]}
 // output: [["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
 // it is about making "links", so there is no ["flare", "flare", null], ["analytics", "analytics", null]
@@ -118,55 +175,4 @@ function table2dot(table) {
     var tree = table2tree(table);
     var dot = tree2dot(tree);
     return dot
-}
-
-// input: [["Date", "Open"], ["2010-10-01", "10789.72"], ...]
-// output: a csv that can be used in d3
-// eg: https://www.funfun.io/edit/5924fca604ce702ccfb22b06
-function array2csv(aa, opt) {
-    var headers;
-    var start;
-    if (opt.hasHeaders) {
-        headers = [];
-        for (var i=0; i < aa[0].length; i++)
-            headers.push(aa[0][i])
-        start = 1;
-    } else {
-        headers = opt.headers;  
-        start = 0;
-    }
-    var r = [];
-    for (var i=start; i < aa.length; i++) {
-        var row = {};
-        for (var j=0; j < aa[i].length; j++)
-            row[headers[j]] = aa[i][j];
-        r.push(row)
-    }
-    return r
-}
-
-// input:
-// [ 
-//   ["source", "target", "type"],
-//   ["Microsoft", "Amazon", "licensing"],
-//   ["Microsoft", "HTC", "licensing"],
-//   ... ...
-// ]
-// output:
-// [ 
-//   {source: "Microsoft", target: "Amazon", type: "licensing"},
-//   {source: "Microsoft", target: "HTC", type: "licensing"},
-//   ... ...
-// ]
-// {currently}: we assume the first element of input is headers
-function arrayOfArray2ArrayOfObject (aa) {
-    var r = [];
-    for (var i = 1; i < aa.length; i++) {
-      var l = {};
-      for (var j = 0; j < aa[0].length; j++) {
-          l[aa[0][j]] = aa[i][j]
-      }
-      r.push(l)
-    };
-    return r
 }
