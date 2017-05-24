@@ -33,7 +33,7 @@ function tree2dot(tree) {
     return aid(tree, "")
 }
 
-// input: [["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
+// input: [["flare", "", ""], ["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
 // output: {"name": "flare", "parent": null, "children": [{"name": "analytics", "parent": "flare", children": [...
 // http://stackoverflow.com/a/17849353/702977
 function table2tree(table) {
@@ -41,7 +41,8 @@ function table2tree(table) {
 
     // create a name: node map
     var dataMap = csv.reduce(function (map, node) {
-        map[node.name] = node;
+        if (node.parent === "") node.parent = null // make ["flare", "", ""] work like ["flare", null, ""]
+        map[node.name] = node; 
         return map;
     }, {});
 
@@ -62,13 +63,12 @@ function table2tree(table) {
     });
 
     if (tree === []) return {};
-    else { alert(JSON.stringify(tree)); 
-        if (tree[0].parent === null) return tree[0]; 
-    else return { "name": tree[0].parent, "parent": null, "children": tree }; } // add "flare"
+    else if (tree[0].parent === null) return tree[0]; 
+    else return { "name": tree[0].parent, "parent": null, "children": tree }; // add "flare"
 }
 
-// input: [["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
-// output: [{"name": "analytics", "parent": "flare", "size": null}, ..., {"name": "AgglomerativeCluster", "parent": "cluster", "size": 3938}
+// input: [["flare", "", ""], ["analytics", "flare", null], ["cluster", "analytics", null], ["AgglomerativeCluster", "cluster", 3938], ...
+// output: [{"name": "flare", "parent": "", "size": ""}, {"name": "analytics", "parent": "flare", "size": null}, ..., {"name": "AgglomerativeCluster", "parent": "cluster", "size": 3938}
 function table2csv(aa, opt) {
     var headers;
     var start;
