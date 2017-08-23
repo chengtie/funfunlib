@@ -66,7 +66,7 @@ function tree2table(tree) {
         var child = children[i];
         var link = [child["name"], tree["name"], child["size"]];
         result.push(link);
-        result = result.concat(tree2table(child))
+        Array.prototype.push.apply(result, tree2table(child));
     }
     return result
 }
@@ -83,7 +83,7 @@ function tree2dot(tree) {
         var children = tree["children"];
         if (children === undefined) return result;
         for (var i = 0; i < children.length; i++) {
-            result = result.concat(aid(children[i], newSt))
+            Array.prototype.push.apply(result, aid(children[i], newSt));
         }
         return result;
     }
