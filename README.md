@@ -6,7 +6,7 @@ I. This library provides developers on the funfun platform with common functions
 
 II. Use a cdn rawgit to load lib.js with a commit hash for example, 
 
-<pre><script src="https://cdn.rawgit.com/chengtie/funfunlib/42d871b/lib.js"></script></pre>
+<pre><script src="https://cdn.jsdelivr.net/gh/chengtie/funfunlib@42d871b/lib.js"></script></pre>
 
 
 III. Example:
